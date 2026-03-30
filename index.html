@@ -2,29 +2,555 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional toolkit with BMI Calculator, Password Generator, Age Calculator, EMI Calculator & Currency Converter. Fast, accurate, and free tools by Mr. Arslan.">
-    <meta name="keywords" content="BMI calculator, password generator, age calculator, EMI calculator, currency converter, free tools, Mr. Arslan">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Arslan Toolkit - Professional free online tools including BMI Calculator, Password Generator, Age Calculator, EMI Calculator & Currency Converter. Fast, accurate, and 100% free.">
+    <meta name="keywords" content="free tools, online calculator, BMI calculator, password generator, age calculator, EMI calculator, currency converter, Arslan Toolkit">
     <meta name="author" content="Mr. Arslan">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.yourwebsite.com/">
-    <title>Arslan Toolkit | 5 Powerful Free Tools by Mr. Arslan</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="canonical" href="https://www.arslantoolkit.com/">
+    <title>Arslan Toolkit | Professional Free Tools Suite</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            border-radius: 10px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo span {
+            background: none;
+            -webkit-text-fill-color: #fff;
+            font-weight: 300;
+        }
+
+        .tagline {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(255,106,0,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .creator-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 10px 25px;
+            border-radius: 50px;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+
+        .share-section {
+            margin: 30px 0;
+            animation: fadeInUp 0.8s ease 0.6s backwards;
+        }
+
+        .share-buttons-home {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .share-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .share-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            padding: 14px 40px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(238,9,121,0.4);
+            animation: fadeInUp 0.8s ease 0.8s backwards;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(238,9,121,0.6);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 80px 0;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            opacity: 0.8;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .tool-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.4s;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .tool-card:hover::before {
+            left: 100%;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: rgba(255,106,0,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .tool-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            position: relative;
+        }
+
+        .tool-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+
+        .tool-icon i {
+            font-size: 45px;
+            color: white;
+        }
+
+        .tool-card h3 {
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        .tool-desc {
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tool-features {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .tool-features span {
+            font-size: 12px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .tool-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            padding: 12px 30px;
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tool-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(238,9,121,0.4);
+        }
+
+        /* More Tools Section */
+        .more-tools {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,106,0,0.1), rgba(238,9,121,0.1));
+        }
+
+        .more-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .more-card i {
+            font-size: 70px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .more-card h3 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .more-card p {
+            opacity: 0.8;
+            margin-bottom: 25px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0,0,0,0.5);
+            padding: 60px 0 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: #fff;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            padding: 12px 25px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(37,211,102,0.4);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.6;
+            font-size: 14px;
+        }
+
+        /* Floating WhatsApp */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .floating-whatsapp a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            color: white;
+            font-size: 32px;
+            box-shadow: 0 5px 20px rgba(37,211,102,0.4);
+            transition: all 0.3s;
+            animation: bounce 2s infinite;
+        }
+
+        .floating-whatsapp a:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 32px;
+            }
+            
+            .header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .container {
+                padding: 0 20px;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="logo">
-                <h1><i class="fas fa-tools"></i> Arslan<span>Toolkit</span></h1>
-                <p class="tagline">Powerful Tools. Instant Results.</p>
+                <h1>Arslan<span>Toolkit</span></h1>
+                <div class="tagline">Power Tools. Instant Results.</div>
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#tools"><i class="fas fa-cogs"></i> Tools</a></li>
-                    <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#tools">Tools</a></li>
+                    <li><a href="#more">Coming Soon</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -34,12 +560,25 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h2>Welcome to <span class="highlight">Arslan Toolkit</span></h2>
-                <p>Your one-stop destination for essential online tools. Fast, accurate, and completely free!</p>
+                <h2>Welcome to <span class="gradient-text">Arslan Toolkit</span></h2>
+                <p>Your ultimate destination for professional-grade free tools</p>
                 <div class="creator-badge">
-                    <i class="fas fa-code"></i> Created by <strong>Mr. Arslan</strong>
+                    <i class="fas fa-crown"></i> Created by <strong>Mr. Arslan</strong> <i class="fas fa-crown"></i>
                 </div>
-                <a href="#tools" class="cta-btn"><i class="fas fa-arrow-down"></i> Explore Tools</a>
+                
+                <!-- Share Section on Home Page -->
+                <div class="share-section">
+                    <p><i class="fas fa-share-alt"></i> Share this toolkit with friends!</p>
+                    <div class="share-buttons-home">
+                        <a href="#" onclick="shareOnFacebook()" class="share-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" onclick="shareOnTwitter()" class="share-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" onclick="shareOnWhatsapp()" class="share-icon"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" onclick="shareOnLinkedin()" class="share-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" onclick="copyLink()" class="share-icon"><i class="fas fa-link"></i></a>
+                    </div>
+                </div>
+                
+                <a href="#tools" class="cta-btn"><i class="fas fa-arrow-down"></i> Explore Free Tools</a>
             </div>
         </div>
     </section>
@@ -48,8 +587,8 @@
     <section id="tools" class="tools-section">
         <div class="container">
             <div class="section-title">
-                <h2><i class="fas fa-star"></i> Our Premium Tools <i class="fas fa-star"></i></h2>
-                <p>Choose any tool below and get instant results</p>
+                <h2><i class="fas fa-star"></i> Premium Tools Suite <i class="fas fa-star"></i></h2>
+                <p>Professional tools crafted with precision and care</p>
             </div>
 
             <div class="tools-grid">
@@ -59,12 +598,13 @@
                         <i class="fas fa-heartbeat"></i>
                     </div>
                     <h3>BodyMass Index</h3>
-                    <p class="tool-desc">Calculate your BMI instantly with health insights and personalized recommendations.</p>
+                    <p class="tool-desc">Calculate your BMI with health insights & personalized recommendations</p>
                     <div class="tool-features">
-                        <span><i class="fas fa-chart-line"></i> Instant Result</span>
+                        <span><i class="fas fa-chart-line"></i> Instant</span>
                         <span><i class="fas fa-info-circle"></i> Health Tips</span>
+                        <span><i class="fas fa-chart-bar"></i> Visual Scale</span>
                     </div>
-                    <a href="bmi-calculator.html" class="tool-btn">Launch Tool <i class="fas fa-arrow-right"></i></a>
+                    <a href="bmi-calculator.html" class="tool-btn">Launch Tool →</a>
                 </div>
 
                 <!-- Tool 2: Password Generator -->
@@ -73,12 +613,13 @@
                         <i class="fas fa-lock"></i>
                     </div>
                     <h3>SecurePass Pro</h3>
-                    <p class="tool-desc">Generate unbreakable passwords with customizable length and character types.</p>
+                    <p class="tool-desc">Generate unbreakable passwords with customizable security levels</p>
                     <div class="tool-features">
-                        <span><i class="fas fa-sliders-h"></i> Customizable</span>
-                        <span><i class="fas fa-copy"></i> Copy to Clipboard</span>
+                        <span><i class="fas fa-sliders-h"></i> Custom</span>
+                        <span><i class="fas fa-copy"></i> Copy</span>
+                        <span><i class="fas fa-shield-alt"></i> Strong</span>
                     </div>
-                    <a href="password-generator.html" class="tool-btn">Launch Tool <i class="fas fa-arrow-right"></i></a>
+                    <a href="password-generator.html" class="tool-btn">Launch Tool →</a>
                 </div>
 
                 <!-- Tool 3: Age Calculator -->
@@ -87,12 +628,13 @@
                         <i class="fas fa-birthday-cake"></i>
                     </div>
                     <h3>AgeWise Clock</h3>
-                    <p class="tool-desc">Calculate exact age in years, months, days with next birthday countdown.</p>
+                    <p class="tool-desc">Calculate exact age with countdown to next birthday</p>
                     <div class="tool-features">
                         <span><i class="fas fa-calendar"></i> Exact Age</span>
-                        <span><i class="fas fa-hourglass-half"></i> Countdown</span>
+                        <span><i class="fas fa-hourglass"></i> Countdown</span>
+                        <span><i class="fas fa-clock"></i> Precision</span>
                     </div>
-                    <a href="age-calculator.html" class="tool-btn">Launch Tool <i class="fas fa-arrow-right"></i></a>
+                    <a href="age-calculator.html" class="tool-btn">Launch Tool →</a>
                 </div>
 
                 <!-- Tool 4: EMI Calculator -->
@@ -101,12 +643,13 @@
                         <i class="fas fa-chart-pie"></i>
                     </div>
                     <h3>LoanMaster EMI</h3>
-                    <p class="tool-desc">Calculate loan EMIs with interest breakup and complete amortization schedule.</p>
+                    <p class="tool-desc">Calculate loan EMIs with complete amortization schedule</p>
                     <div class="tool-features">
                         <span><i class="fas fa-rupee-sign"></i> EMI Breakup</span>
                         <span><i class="fas fa-chart-bar"></i> Visual Charts</span>
+                        <span><i class="fas fa-calculator"></i> Accurate</span>
                     </div>
-                    <a href="emi-calculator.html" class="tool-btn">Launch Tool <i class="fas fa-arrow-right"></i></a>
+                    <a href="emi-calculator.html" class="tool-btn">Launch Tool →</a>
                 </div>
 
                 <!-- Tool 5: Currency Converter -->
@@ -115,84 +658,118 @@
                         <i class="fas fa-exchange-alt"></i>
                     </div>
                     <h3>ExchangeSwift</h3>
-                    <p class="tool-desc">Convert currencies instantly with real-time exchange rates worldwide.</p>
+                    <p class="tool-desc">Real-time currency conversion for 150+ currencies worldwide</p>
                     <div class="tool-features">
                         <span><i class="fas fa-globe"></i> 150+ Currencies</span>
                         <span><i class="fas fa-chart-line"></i> Live Rates</span>
+                        <span><i class="fas fa-bolt"></i> Instant</span>
                     </div>
-                    <a href="currency-converter.html" class="tool-btn">Launch Tool <i class="fas fa-arrow-right"></i></a>
+                    <a href="currency-converter.html" class="tool-btn">Launch Tool →</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about-section">
+    <!-- More Tools Coming Soon Section -->
+    <section id="more" class="more-tools">
         <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2><i class="fas fa-user-astronaut"></i> About Mr. Arslan</h2>
-                    <p>Hi! I'm <strong>Mr. Arslan</strong>, a passionate developer dedicated to creating powerful, user-friendly tools that make life easier.</p>
-                    <p>Every tool on this website is carefully crafted with clean code, modern design, and accurate calculations. All tools are 100% free and work without any server-side dependencies.</p>
-                    <div class="skills">
-                        <span><i class="fas fa-code"></i> HTML5</span>
-                        <span><i class="fas fa-css3-alt"></i> CSS3</span>
-                        <span><i class="fab fa-js"></i> JavaScript</span>
-                        <span><i class="fas fa-mobile-alt"></i> Responsive</span>
-                    </div>
-                </div>
-                <div class="about-stats">
-                    <div class="stat">
-                        <i class="fas fa-tools"></i>
-                        <h3>5+</h3>
-                        <p>Powerful Tools</p>
-                    </div>
-                    <div class="stat">
-                        <i class="fas fa-users"></i>
-                        <h3>Free</h3>
-                        <p>For Everyone</p>
-                    </div>
-                    <div class="stat">
-                        <i class="fas fa-bolt"></i>
-                        <h3>Instant</h3>
-                        <p>Results</p>
-                    </div>
+            <div class="more-card">
+                <i class="fas fa-rocket"></i>
+                <h3>More Tools Coming Soon!</h3>
+                <p>We're working on exciting new tools including QR Code Generator, Random Name Generator, Horoscope Finder, Unit Converter, and many more!</p>
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <span style="background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 20px;">📱 QR Code</span>
+                    <span style="background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 20px;">🎲 Name Generator</span>
+                    <span style="background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 20px;">⭐ Horoscope</span>
+                    <span style="background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 20px;">📏 Unit Converter</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer id="contact" class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <h3><i class="fas fa-tools"></i> ArslanToolkit</h3>
-                    <p>Created with <i class="fas fa-heart"></i> by <strong>Mr. Arslan</strong></p>
+                    <h3>Arslan Toolkit</h3>
+                    <p>Created with <i class="fas fa-heart" style="color: #ff6a00;"></i> by <strong>Mr. Arslan</strong></p>
+                    <p style="margin-top: 10px; opacity: 0.7;">Professional free tools for everyone</p>
                 </div>
                 <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#tools">Tools</a></li>
-                        <li><a href="#about">About</a></li>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#tools">All Tools</a></li>
+                        <li><a href="#more">Coming Soon</a></li>
                     </ul>
                 </div>
-                <div class="footer-social">
-                    <h4>Follow Me</h4>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
+                <div class="footer-links">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#" class="whatsapp-btn" id="whatsappLink"><i class="fab fa-whatsapp"></i> WhatsApp Support</a></li>
+                        <li style="margin-top: 10px;"><i class="fas fa-envelope"></i> arslan@toolkit.com</li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 ArslanToolkit | All Rights Reserved | Designed by Mr. Arslan</p>
+                <p>© 2024 Arslan Toolkit | All Rights Reserved | Designed by Mr. Arslan</p>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Floating WhatsApp Button -->
+    <div class="floating-whatsapp">
+        <a href="#" id="floatingWhatsappLink" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <script>
+        // Share Functions for Home Page
+        function shareOnFacebook() {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
+        }
+        
+        function shareOnTwitter() {
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent('Check out Arslan Toolkit - Amazing free tools for everyone!')}&url=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
+        }
+        
+        function shareOnWhatsapp() {
+            window.open(`https://wa.me/?text=${encodeURIComponent('Check out Arslan Toolkit - Amazing free tools! ' + window.location.href)}`, '_blank');
+        }
+        
+        function shareOnLinkedin() {
+            window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent('Arslan Toolkit')}&summary=${encodeURIComponent('Free professional tools for everyone!')}`, '_blank', 'width=600,height=400');
+        }
+        
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('✅ Link copied to clipboard! Share it with your friends.');
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // WhatsApp link - Add your number here
+        // Replace 'YOUR_NUMBER' with actual WhatsApp number including country code
+        // Example: '923001234567' for Pakistan
+        const whatsappNumber = 'YOUR_NUMBER'; // <-- Add your WhatsApp number here
+        const whatsappMessage = 'Hi! I want to know about more tools for Arslan Toolkit';
+        
+        if (whatsappNumber !== 'YOUR_NUMBER') {
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+            document.getElementById('whatsappLink').href = whatsappUrl;
+            document.getElementById('floatingWhatsappLink').href = whatsappUrl;
+        }
+    </script>
 </body>
-  </html>
+</html>
