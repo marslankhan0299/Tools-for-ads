@@ -3,42 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calculate your Body Mass Index instantly with health insights. Free BMI calculator by Mr. Arslan.">
-    <title>BodyMass Index | BMI Calculator by Mr. Arslan</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Free BMI Calculator - Calculate your Body Mass Index instantly with health insights and personalized recommendations by Mr. Arslan">
+    <meta name="keywords" content="BMI calculator, body mass index, health calculator, weight calculator, free BMI tool">
+    <meta name="author" content="Mr. Arslan">
+    <title>BMI Calculator | Body Mass Index Tool by Mr. Arslan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .bmi-scale {
-            margin-top: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo span {
+            background: none;
+            -webkit-text-fill-color: #fff;
+            font-weight: 300;
+        }
+
+        .tagline {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            color: #ff6a00;
+        }
+
+        /* Tool Container */
+        .tool-container {
+            max-width: 800px;
+            margin: 60px auto;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s;
+        }
+
+        .tool-container:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,106,0,0.5);
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-header h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tool-header p {
+            opacity: 0.8;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .input-group label i {
+            color: #ff6a00;
+            margin-right: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
             padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            font-size: 16px;
+            color: white;
+            transition: all 0.3s;
         }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #ff6a00;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px 0;
+        }
+
+        .calculate-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(238,9,121,0.4);
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, rgba(255,106,0,0.2), rgba(238,9,121,0.2));
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: none;
+        }
+
+        .result-box h3 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .result-box p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .bmi-scale {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+        }
+
+        .bmi-scale h4 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
         .bmi-category {
-            padding: 8px;
-            margin: 5px 0;
-            border-radius: 5px;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 500;
         }
-        .underweight { background: #87CEEB; color: #000; }
-        .normal { background: #90EE90; color: #000; }
-        .overweight { background: #FFD700; color: #000; }
-        .obese { background: #FF6B6B; color: #fff; }
+
+        .underweight { background: rgba(135,206,235,0.3); border-left: 4px solid #87CEEB; }
+        .normal { background: rgba(144,238,144,0.3); border-left: 4px solid #90EE90; }
+        .overweight { background: rgba(255,215,0,0.3); border-left: 4px solid #FFD700; }
+        .obese { background: rgba(255,107,107,0.3); border-left: 4px solid #FF6B6B; }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .share-btn.facebook { background: #1877f2; color: white; }
+        .share-btn.twitter { background: #1da1f2; color: white; }
+        .share-btn.whatsapp { background: #25d366; color: white; }
+        .share-btn.copy { background: linear-gradient(135deg, #ff6a00, #ee0979); color: white; }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            color: #ff6a00;
+            transform: translateX(-5px);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0,0,0,0.5);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .tool-container {
+                margin: 30px 20px;
+                padding: 30px 20px;
+            }
+            
+            .tool-header h2 {
+                font-size: 28px;
+            }
+            
+            .share-buttons {
+                gap: 10px;
+            }
+            
+            .share-btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+            
+            .header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="logo">
-                <h1><i class="fas fa-tools"></i> Arslan<span>Toolkit</span></h1>
+                <h1>Arslan<span>Toolkit</span></h1>
+                <div class="tagline">Power Tools. Instant Results.</div>
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#tools">Tools</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
+    <!-- BMI Calculator Main Content -->
     <div class="tool-container">
         <div class="tool-header">
             <h2><i class="fas fa-heartbeat"></i> BodyMass Index Calculator</h2>
@@ -47,89 +326,132 @@
 
         <div class="input-group">
             <label><i class="fas fa-arrows-alt"></i> Height (cm)</label>
-            <input type="number" id="height" placeholder="Enter your height in cm">
+            <input type="number" id="height" placeholder="Enter your height in centimeters">
         </div>
 
         <div class="input-group">
             <label><i class="fas fa-weight-hanging"></i> Weight (kg)</label>
-            <input type="number" id="weight" placeholder="Enter your weight in kg">
+            <input type="number" id="weight" placeholder="Enter your weight in kilograms">
         </div>
 
-        <button onclick="calculateBMI()" class="tool-btn" style="width: 100%; margin: 10px 0;">
+        <button class="calculate-btn" onclick="calculateBMI()">
             <i class="fas fa-calculator"></i> Calculate BMI
         </button>
 
-        <div id="result" class="result-box" style="display: none;">
+        <div id="result" class="result-box">
             <h3 id="bmiValue"></h3>
             <p id="bmiCategory"></p>
             <p id="bmiAdvice"></p>
         </div>
 
         <div class="bmi-scale">
-            <h4>BMI Categories:</h4>
-            <div class="bmi-category underweight">Underweight: Below 18.5</div>
-            <div class="bmi-category normal">Normal: 18.5 - 24.9</div>
-            <div class="bmi-category overweight">Overweight: 25 - 29.9</div>
-            <div class="bmi-category obese">Obese: 30 and above</div>
+            <h4><i class="fas fa-chart-line"></i> BMI Categories</h4>
+            <div class="bmi-category underweight">📉 Underweight: Below 18.5</div>
+            <div class="bmi-category normal">✅ Normal: 18.5 - 24.9</div>
+            <div class="bmi-category overweight">⚠️ Overweight: 25 - 29.9</div>
+            <div class="bmi-category obese">🔴 Obese: 30 and above</div>
         </div>
 
         <div class="share-buttons">
-            <button onclick="shareResult()" class="share-btn"><i class="fas fa-share-alt"></i> Share Result</button>
-            <button onclick="shareOnFacebook(window.location.href, 'Check my BMI result!')" class="share-btn facebook"><i class="fab fa-facebook"></i> Facebook</button>
-            <button onclick="shareOnTwitter(window.location.href, 'Check my BMI result!')" class="share-btn twitter"><i class="fab fa-twitter"></i> Twitter</button>
-            <button onclick="shareOnWhatsapp(window.location.href, 'Check my BMI result!')" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+            <button onclick="shareResult()" class="share-btn copy"><i class="fas fa-share-alt"></i> Share Result</button>
+            <button onclick="shareOnFacebook()" class="share-btn facebook"><i class="fab fa-facebook"></i> Facebook</button>
+            <button onclick="shareOnTwitter()" class="share-btn twitter"><i class="fab fa-twitter"></i> Twitter</button>
+            <button onclick="shareOnWhatsapp()" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
         </div>
 
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Tools</a>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to All Tools</a>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Created with <i class="fas fa-heart" style="color: #ff6a00;"></i> by <strong>Mr. Arslan</strong> | © 2024 Arslan Toolkit</p>
+        </div>
+    </footer>
 
     <script>
         function calculateBMI() {
             let height = document.getElementById('height').value;
             let weight = document.getElementById('weight').value;
             
-            if (height && weight) {
+            if (height && weight && height > 0 && weight > 0) {
                 let bmi = weight / ((height/100) ** 2);
                 bmi = bmi.toFixed(1);
                 
                 let category = '';
                 let advice = '';
-                let color = '';
+                let bgColor = '';
                 
                 if (bmi < 18.5) {
                     category = 'Underweight';
-                    advice = '💪 Consider gaining weight through healthy nutrition and exercise.';
-                    color = '#87CEEB';
+                    advice = '💪 Consider gaining weight through healthy nutrition and regular exercise. Consult a nutritionist for a personalized plan.';
+                    bgColor = 'rgba(135,206,235,0.3)';
                 } else if (bmi >= 18.5 && bmi <= 24.9) {
                     category = 'Normal Weight';
-                    advice = '🎉 Great! Maintain your healthy lifestyle!';
-                    color = '#90EE90';
+                    advice = '🎉 Excellent! You have a healthy weight. Maintain your lifestyle with balanced diet and regular exercise.';
+                    bgColor = 'rgba(144,238,144,0.3)';
                 } else if (bmi >= 25 && bmi <= 29.9) {
                     category = 'Overweight';
-                    advice = '🏃‍♂️ Focus on balanced diet and regular exercise.';
-                    color = '#FFD700';
+                    advice = '🏃‍♂️ Focus on balanced diet and regular physical activity. Small changes can make a big difference!';
+                    bgColor = 'rgba(255,215,0,0.3)';
                 } else {
                     category = 'Obese';
-                    advice = '⚠️ Consult a doctor for a personalized health plan.';
-                    color = '#FF6B6B';
+                    advice = '⚠️ For your health, consider consulting a doctor or nutritionist. Start with small lifestyle changes and regular exercise.';
+                    bgColor = 'rgba(255,107,107,0.3)';
                 }
                 
                 document.getElementById('bmiValue').innerHTML = `BMI: ${bmi}`;
                 document.getElementById('bmiCategory').innerHTML = `<strong>Category:</strong> ${category}`;
                 document.getElementById('bmiAdvice').innerHTML = advice;
-                document.getElementById('result').style.display = 'block';
-                document.getElementById('result').style.background = color;
+                const resultBox = document.getElementById('result');
+                resultBox.style.display = 'block';
+                resultBox.style.background = bgColor;
+                
+                // Store result for sharing
+                window.currentBMIResult = `My BMI is ${bmi} (${category}). ${advice}`;
             } else {
-                alert('Please enter both height and weight');
+                alert('⚠️ Please enter valid height and weight (positive numbers only)');
             }
         }
         
         function shareResult() {
-            let bmi = document.getElementById('bmiValue').innerHTML;
-            let category = document.getElementById('bmiCategory').innerHTML;
-            alert(`Share this result:\n${bmi}\n${category}\nvia social media buttons above!`);
+            if (window.currentBMIResult) {
+                alert(`📊 Your BMI Result:\n\n${window.currentBMIResult}\n\nClick on social media buttons above to share!`);
+            } else {
+                alert('Please calculate your BMI first!');
+            }
         }
+        
+        function shareOnFacebook() {
+            if (window.currentBMIResult) {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(window.currentBMIResult)}`, '_blank', 'width=600,height=400');
+            } else {
+                alert('Please calculate your BMI first!');
+            }
+        }
+        
+        function shareOnTwitter() {
+            if (window.currentBMIResult) {
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(window.currentBMIResult + ' Check it out: ')}&url=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
+            } else {
+                alert('Please calculate your BMI first!');
+            }
+        }
+        
+        function shareOnWhatsapp() {
+            if (window.currentBMIResult) {
+                window.open(`https://wa.me/?text=${encodeURIComponent(window.currentBMIResult + ' ' + window.location.href)}`, '_blank');
+            } else {
+                alert('Please calculate your BMI first!');
+            }
+        }
+        
+        // Enter key press to calculate
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                calculateBMI();
+            }
+        });
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
