@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Age Calculator - Calculate your exact age in years, months, days, hours, minutes, and seconds. Get zodiac signs, life milestones, birthday countdown, and detailed age report.">
+    <meta name="keywords" content="age calculator, exact age, birthday countdown, zodiac finder, Chinese zodiac, life milestones, age in seconds">
+    <meta name="author" content="Mr. Arslan">
+    <title>AgeWise Clock | Professional Age Calculator by Mr. Arslan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        :root {
+            --bg-primary: #f5f7fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 40px rgba(0,0,0,0.1);
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
+            --info: #4299e1;
+        }
+
+        body.dark {
+            --bg-primary: #0f0c29;
+            --bg-secondary: #1a1a2e;
+            --text-primary: #f7fafc;
+            --text-secondary: #cbd5e0;
+            --card-bg: rgba(255,255,255,0.05);
+            --border-color: rgba(255,255,255,0.1);
+            --shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .header {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-header h2 {
+            font-size: 36px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        /* Input Section */
+        .input-section {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .date-input {
+            background: var(--bg-primary);
+            padding: 20px;
+            border-radius: 20px;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .date-input label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .date-input input {
+            width: 100%;
+            padding: 15px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        /* Age Display Cards */
+        .age-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .age-card {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .age-card .value {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .age-card .label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        /* Live Timer */
+        .live-timer {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 2px solid var(--border-color);
+        }
+
+        .live-timer h3 {
+            margin-bottom: 15px;
+        }
+
+        .timer-values {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .timer-unit {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 15px;
+            min-width: 100px;
+        }
+
+        .timer-unit .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--gradient-start);
+        }
+
+        .timer-unit .unit {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-card h4 {
+            color: var(--gradient-start);
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Birthday Countdown */
+        .birthday-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+        /* Zodiac Section */
+        .zodiac-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .zodiac-card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .zodiac-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        /* Milestones */
+        .milestones-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .milestone {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            background: var(--bg-primary);
+            border-radius: 10px;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .share-btn.facebook { background: #1877f2; color: white; }
+        .share-btn.twitter { background: #1da1f2; color: white; }
+        .share-btn.whatsapp { background: #25d366; color: white; }
+        .share-btn.copy { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); color: white; }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .footer-whatsapp {
+            margin-top: 15px;
+        }
+
+        .footer-whatsapp a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            padding: 10px 25px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .floating-whatsapp a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            color: white;
+            font-size: 32px;
+            box-shadow: 0 5px 20px rgba(37,211,102,0.4);
+            animation: bounce 2s infinite;
+            text-decoration: none;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            .tool-card { padding: 25px; }
+            .timer-unit .number { font-size: 24px; }
+            .zodiac-grid { grid-template-columns: 1fr; }
+            .age-card .value { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="theme-toggle">
+        <button class="theme-btn" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Arslan<span>Toolkit</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#tools">Tools</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="tool-card">
+            <div class="tool-header">
+                <h2><i class="fas fa-clock"></i> AgeWise Clock</h2>
+                <p>Calculate your exact age with precision down to the second</p>
+            </div>
+
+            <div class="input-section">
+                <div class="date-input">
+                    <label><i class="fas fa-calendar-alt"></i> Your Birth Date</label>
+                    <input type="date" id="birthDate" value="2000-01-01">
+                </div>
+                <div class="date-input">
+                    <label><i class="fas fa-user"></i> Your Name (Optional)</label>
+                    <input type="text" id="userName" placeholder="Enter your name">
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateAge()">
+                <i class="fas fa-calculator"></i> Calculate My Age
+            </button>
+
+            <div id="results" style="display: none;">
+                <!-- Main Age Cards -->
+                <div class="age-cards">
+                    <div class="age-card">
+                        <div class="value" id="years">0</div>
+                        <div class="label">Years</div>
+                    </div>
+                    <div class="age-card">
+                        <div class="value" id="months">0</div>
+                        <div class="label">Months</div>
+                    </div>
+                    <div class="age-card">
+                        <div class="value" id="days">0</div>
+                        <div class="label">Days</div>
+                    </div>
+                </div>
+
+                <!-- Live Timer (Seconds, Minutes, Hours) -->
+                <div class="live-timer">
+                    <h3><i class="fas fa-hourglass-half"></i> Your Exact Age (Live Counter)</h3>
+                    <div class="timer-values">
+                        <div class="timer-unit">
+                            <div class="number" id="hours">0</div>
+                            <div class="unit">Hours</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="number" id="minutes">0</div>
+                            <div class="unit">Minutes</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="number" id="seconds">0</div>
+                            <div class="unit">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4><i class="fas fa-chart-line"></i> Age in Different Units</h4>
+                        <div class="stat-item"><span>Total Months:</span><span id="totalMonths">0</span></div>
+                        <div class="stat-item"><span>Total Weeks:</span><span id="totalWeeks">0</span></div>
+                        <div class="stat-item"><span>Total Days:</span><span id="totalDays">0</span></div>
+                        <div class="stat-item"><span>Total Hours:</span><span id="totalHours">0</span></div>
+                        <div class="stat-item"><span>Total Minutes:</span><span id="totalMinutes">0</span></div>
+                        <div class="stat-item"><span>Total Seconds:</span><span id="totalSeconds">0</span></div>
+                    </div>
+
+                    <div class="stat-card">
+                        <h4><i class="fas fa-info-circle"></i> Birth Information</h4>
+                        <div class="stat-item"><span>Born On:</span><span id="bornDay">-</span></div>
+                        <div class="stat-item"><span>Current Age:</span><span id="currentAge">-</span></div>
+                        <div class="stat-item"><span>Next Birthday:</span><span id="nextBirthday">-</span></div>
+                        <div class="stat-item"><span>Days to Birthday:</span><span id="daysToBirthday">-</span></div>
+                    </div>
+                </div>
+
+                <!-- Birthday Countdown -->
+                <div class="birthday-card" id="birthdayCard">
+                    <h3><i class="fas fa-birthday-cake"></i> Next Birthday Countdown</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="birthdayProgress" style="width: 0%;"></div>
+                    </div>
+                    <p id="birthdayMessage">Loading...</p>
+                </div>
+
+                <!-- Zodiac Signs -->
+                <div class="zodiac-grid">
+                    <div class="zodiac-card">
+                        <div class="zodiac-icon" id="zodiacIcon">♈</div>
+                        <h3 id="zodiacName">Aries</h3>
+                        <p id="zodiacTraits">March 21 - April 19</p>
+                    </div>
+                    <div class="zodiac-card">
+                        <div class="zodiac-icon" id="chineseIcon">🐉</div>
+                        <h3 id="chineseName">Dragon</h3>
+                        <p id="chineseTraits">Ambitious, Confident, Enthusiastic</p>
+                    </div>
+                </div>
+
+                <!-- Life Milestones -->
+                <div class="stat-card">
+                    <h4><i class="fas fa-flag-checkered"></i> Life Milestones</h4>
+                    <div class="milestones-list" id="milestonesList">
+                        Loading...
+                    </div>
+                </div>
+
+                <!-- Share Buttons -->
+                <div class="share-buttons">
+                    <button onclick="shareAgeReport()" class="share-btn copy"><i class="fas fa-share-alt"></i> Share Report</button>
+                    <button onclick="shareOnWhatsapp()" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                    <button onclick="shareOnFacebook()" class="share-btn facebook"><i class="fab fa-facebook"></i> Facebook</button>
+                </div>
+            </div>
+
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to All Tools</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Created with <i class="fas fa-heart" style="color: #ff6a00;"></i> by <strong>Mr. Arslan</strong> | AgeWise Clock | © 2024</p>
+            <div class="footer-whatsapp">
+                <a href="#" id="footerWhatsappLink" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Contact Mr. Arslan on WhatsApp
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="floating-whatsapp">
+        <a href="#" id="floatingWhatsappLink" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <script>
+        // WhatsApp Configuration
+        const WHATSAPP_NUMBER = '93748845221';
+        const WHATSAPP_MESSAGE = 'Hi! I want to know more about AgeWise Clock from Arslan Toolkit';
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+        
+        document.getElementById('floatingWhatsappLink').href = whatsappUrl;
+        document.getElementById('footerWhatsappLink').href = whatsappUrl;
+
+        let birthDateTime = null;
+        let timerInterval = null;
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        function getZodiacSign(month, day) {
+            const signs = [
+                { name: "Capricorn", emoji: "♑", start: [1, 1], end: [1, 19], traits: "Ambitious, Disciplined, Patient" },
+                { name: "Aquarius", emoji: "♒", start: [1, 20], end: [2, 18], traits: "Innovative, Humanitarian, Independent" },
+                { name: "Pisces", emoji: "♓", start: [2, 19], end: [3, 20], traits: "Artistic, Compassionate, Intuitive" },
+                { name: "Aries", emoji: "♈", start: [3, 21], end: [4, 19], traits: "Courageous, Energetic, Confident" },
+                { name: "Taurus", emoji: "♉", start: [4, 20], end: [5, 20], traits: "Reliable, Patient, Practical" },
+                { name: "Gemini", emoji: "♊", start: [5, 21], end: [6, 20], traits: "Adaptable, Outgoing, Intelligent" },
+                { name: "Cancer", emoji: "♋", start: [6, 21], end: [7, 22], traits: "Loyal, Emotional, Protective" },
+                { name: "Leo", emoji: "♌", start: [7, 23], end: [8, 22], traits: "Creative, Passionate, Generous" },
+                { name: "Virgo", emoji: "♍", start: [8, 23], end: [9, 22], traits: "Analytical, Practical, Hardworking" },
+                { name: "Libra", emoji: "♎", start: [9, 23], end: [10, 22], traits: "Diplomatic, Graceful, Social" },
+                { name: "Scorpio", emoji: "♏", start: [10, 23], end: [11, 21], traits: "Passionate, Resourceful, Brave" },
+                { name: "Sagittarius", emoji: "♐", start: [11, 22], end: [12, 21], traits: "Adventurous, Optimistic, Honest" },
+                { name: "Capricorn", emoji: "♑", start: [12, 22], end: [12, 31], traits: "Ambitious, Disciplined, Patient" }
+            ];
+            
+            for (let sign of signs) {
+                if ((month === sign.start[0] && day >= sign.start[1]) || 
+                    (month === sign.end[0] && day <= sign.end[1]) ||
+                    (month > sign.start[0] && month < sign.end[0])) {
+                    return sign;
+                }
+            }
+            return signs[0];
+        }
+
+        function getChineseZodiac(year) {
+            const animals = ["🐀 Rat", "🐂 Ox", "🐅 Tiger", "🐇 Rabbit", "🐉 Dragon", "🐍 Snake", "🐎 Horse", "🐏 Goat", "🐒 Monkey", "🐔 Rooster", "🐕 Dog", "🐖 Pig"];
+            const traits = [
+                "Witty, Resourceful, Quick-witted",
+                "Diligent, Dependable, Strong",
+                "Brave, Confident, Competitive",
+                "Gentle, Quiet, Elegant",
+                "Confident, Ambitious, Enthusiastic",
+                "Wise, Mysterious, Deep",
+                "Energetic, Loyal, Hardworking",
+                "Calm, Gentle, Sympathetic",
+                "Clever, Curious, Playful",
+                "Observant, Hardworking, Courageous",
+                "Loyal, Honest, Reliable",
+                "Compassionate, Generous, Diligent"
+            ];
+            const index = (year - 4) % 12;
+            return { name: animals[index], traits: traits[index] };
+        }
+
+        function calculateAge() {
+            const birthDate = new Date(document.getElementById('birthDate').value);
+            const now = new Date();
+            
+            if (isNaN(birthDate.getTime())) {
+                alert('Please enter a valid birth date');
+                return;
+            }
+            
+            birthDateTime = birthDate;
+            
+            // Calculate differences
+            let years = now.getFullYear() - birthDate.getFullYear();
+            let months = now.getMonth() - birthDate.getMonth();
+            let days = now.getDate() - birthDate.getDate();
+            
+            if (days < 0) {
+                months--;
+                const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += lastMonth.getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            // Total calculations
+            const totalMonths = (now.getFullYear() - birthDate.getFullYear()) * 12 + (now.getMonth() - birthDate.getMonth());
+            const totalDays = Math.floor((now - birthDate) / (1000 * 60 * 60 * 24));
+            const totalWeeks = Math.floor(totalDays / 7);
+            const totalHours = Math.floor((now - birthDate) / (1000 * 60 * 60));
+            const totalMinutes = Math.floor((now - birthDate) / (1000 * 60));
+            const totalSeconds = Math.floor((now - birthDate) / 1000);
+            
+            // Update display
+            document.getElementById('years').innerHTML = years;
+            document.getElementById('months').innerHTML = months;
+            document.getElementById('days').innerHTML = days;
+            document.getElementById('totalMonths').innerHTML = totalMonths.toLocaleString();
+            document.getElementById('totalWeeks').innerHTML = totalWeeks.toLocaleString();
+            document.getElementById('totalDays').innerHTML = totalDays.toLocaleString();
+            document.getElementById('totalHours').innerHTML = totalHours.toLocaleString();
+            document.getElementById('totalMinutes').innerHTML = totalMinutes.toLocaleString();
+            document.getElementById('totalSeconds').innerHTML = totalSeconds.toLocaleString();
+            
+            // Born on day
+            const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            document.getElementById('bornDay').innerHTML = weekdays[birthDate.getDay()];
+            
+            // Next birthday
+            const nextBirthday = new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+            if (nextBirthday < now) {
+                nextBirthday.setFullYear(now.getFullYear() + 1);
+            }
+            const daysToBirthday = Math.ceil((nextBirthday - now) / (1000 * 60 * 60 * 24));
+            document.getElementById('nextBirthday').innerHTML = nextBirthday.toLocaleDateString();
+            document.getElementById('daysToBirthday').innerHTML = daysToBirthday;
+            document.getElementById('currentAge').innerHTML = `${years} years, ${months} months, ${days} days`;
+            
+            // Birthday progress
+            const birthdayProgress = ((365 - daysToBirthday) / 365) * 100;
+            document.getElementById('birthdayProgress').style.width = `${Math.max(0, Math.min(100, birthdayProgress))}%`;
+            document.getElementById('birthdayMessage').innerHTML = `🎂 Your next birthday is in ${daysToBirthday} days! ${daysToBirthday <= 30 ? 'Start planning your celebration!' : 'Time to start counting down!'}`;
+            
+            // Zodiac signs
+            const zodiac = getZodiacSign(birthDate.getMonth() + 1, birthDate.getDate());
+            document.getElementById('zodiacIcon').innerHTML = zodiac.emoji;
+            document.getElementById('zodiacName').innerHTML = zodiac.name;
+            document.getElementById('zodiacTraits').innerHTML = zodiac.traits;
+            
+            const chinese = getChineseZodiac(birthDate.getFullYear());
+            document.getElementById('chineseIcon').innerHTML = chinese.name.split(' ')[0];
+            document.getElementById('chineseName').innerHTML = chinese.name.split(' ')[1];
+            document.getElementById('chineseTraits').innerHTML = chinese.traits;
+            
+            // Milestones
+            const milestones = [10000, 20000, 30000, 40000, 50000, 75000, 100000];
+            let milestonesHTML = '';
+            for (let milestone of milestones) {
+                const milestoneDate = new Date(birthDate);
+                milestoneDate.setDate(birthDate.getDate() + milestone);
+                const passed = now >= milestoneDate;
+                milestonesHTML += `
+                    <div class="milestone">
+                        <span>🎯 ${milestone.toLocaleString()} days old</span>
+                        <span>${passed ? '✅ Passed' : '📅 ' + milestoneDate.toLocaleDateString()}</span>
+                    </div>
+                `;
+            }
+            document.getElementById('milestonesList').innerHTML = milestonesHTML;
+            
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            
+            // Start live timer
+            if (timerInterval) clearInterval(timerInterval);
+            startLiveTimer();
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function startLiveTimer() {
+            if (!birthDateTime) return;
+            
+            timerInterval = setInterval(() => {
+                const now = new Date();
+                const diffMs = now - birthDateTime;
+                
+                const hours = Math.floor(diffMs / (1000 * 60 * 60));
+                const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+                
+                document.getElementById('hours').innerHTML = hours.toLocaleString();
+                document.getElementById('minutes').innerHTML = minutes.toLocaleString();
+                document.getElementById('seconds').innerHTML = seconds.toLocaleString();
+                
+                // Update total seconds as well
+                document.getElementById('totalSeconds').innerHTML = Math.floor(diffMs / 1000).toLocaleString();
+                document.getElementById('totalMinutes').innerHTML = Math.floor(diffMs / (1000 * 60)).toLocaleString();
+                document.getElementById('totalHours').innerHTML = Math.floor(diffMs / (1000 * 60 * 60)).toLocaleString();
+            }, 1000);
+        }
+        
+        function shareAgeReport() {
+            const name = document.getElementById('userName').value || 'User';
+            const years = document.getElementById('years').innerHTML;
+            const months = document.getElementById('months').innerHTML;
+            const days = document.getElementById('days').innerHTML;
+            const zodiac = document.getElementById('zodiacName').innerHTML;
+            const chinese = document.getElementById('chineseName').innerHTML;
+            
+            const report = `📊 AGE REPORT - ${name}
+            
+🎂 Exact Age: ${years} Years, ${months} Months, ${days} Days
+⭐ Zodiac Sign: ${zodiac}
+🐉 Chinese Zodiac: ${chinese}
+📅 Total Days Alive: ${document.getElementById('totalDays').innerHTML}
+
+Get your detailed age report at Arslan Toolkit!`;
+            
+            alert(report + '\n\nShare via social media buttons below!');
+            window.currentShareText = report;
+        }
+        
+        function shareOnWhatsapp() {
+            if (window.currentShareText) {
+                window.open(`https://wa.me/?text=${encodeURIComponent(window.currentShareText)}`, '_blank');
+            } else {
+                alert('Please calculate your age first!');
+            }
+        }
+        
+        function shareOnFacebook() {
+            if (window.currentShareText) {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(window.currentShareText)}`, '_blank', 'width=600,height=400');
+            } else {
+                alert('Please calculate your age first!');
+            }
+        }
+        
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+        }
+        
+        // Auto-calculate on page load
+        window.onload = () => {
+            calculateAge();
+        };
+    </script>
+</body>
+</html>
